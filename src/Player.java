@@ -115,6 +115,7 @@ public class Player {
         }
         if(hand.size() == 0)          //If the player got no more card
         {
+            table.setLastPlayerTurn(table.getGameplayers().get((table.getGameplayers().indexOf(this)+1)%table.getGameplayers().size()).getName());
             leaveGame(table);           //They leave the game
         }
 
