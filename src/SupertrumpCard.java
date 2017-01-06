@@ -1,14 +1,14 @@
 /**
  * Created by Rico on 1/4/2017.
  */
-public class SupertrumpCard extends Card {
+public class SupertrumpCard extends Card {          //Class extend from the Card class
 
     SupertrumpCard(String nm)
     {
         super(nm);
-    }
+    }           //Constructing from super
 
-    public String useEffect()
+    public String useEffect()                       //Use effect method to return string to be used as command
     {
         String effect = "";
         String x = getName();
@@ -17,17 +17,17 @@ public class SupertrumpCard extends Card {
         else if(x.equals("The Geologist"))
         {effect = "NEW";}
         else if(x.equals("The Geophysicist"))
-        {effect = "S";}
+        {effect = "SS";}
         else if(x.equals("The Petrologist"))
         {effect = "A";}
         else if(x.equals("The Miner"))
         {effect = "E";}
         else if(x.equals("The Gemmologist"))
         {effect = "H";}
-        return effect;
+        return effect;                                     //Filling the details for the method
     }
 
-    public String cardDescription()
+    public String cardDescription()                     //Method to show the description for the card
     {
         String description = "";
         String x = getName();
@@ -43,6 +43,6 @@ public class SupertrumpCard extends Card {
         {description = "Change trump category to economic value";}
         else if(x.equals("The Gemmologist"))
         {description = "Change trump category to hardness";}
-        return description;
+        return description;                                 //Filling the details for the method to describe
     }
 }

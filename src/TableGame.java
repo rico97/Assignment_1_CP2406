@@ -1,6 +1,5 @@
 import javax.swing.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.ArrayList;         //Import the necessary package
 
 /**
  * Created by Rico on 1/5/2017.
@@ -10,13 +9,33 @@ public class TableGame {
     private Deck deckCard;
     private ArrayList<Player> gameplayers;
     private String categoryMode;
-    private String lastPlayerTurn;
+    private String lastPlayerTurn;          //Defining all the variable
 
-    public String getCategoryMode() {
+    TableGame(int numberOfPlayers, Deck deckcard)       //Constructing the class
+    {
+        categoryMode = "";
+        usedCard = new ArrayList<Card>();
+        gameplayers = new ArrayList<Player>();
+        deckCard = deckcard;
+        lastPlayerTurn = "";
+        for(int x = 0; x < numberOfPlayers; x++)
+        {
+            String nameOfPlayer = JOptionPane.showInputDialog(null,"Enter player name", "Name",
+                    JOptionPane.INFORMATION_MESSAGE);
+            gameplayers.add(new Player(nameOfPlayer));              //Asking the player name and add the to the table as an arraylist
+        }
+        for(int x = 0; x<8; x++) {
+            for (Player player : gameplayers) {
+                player.drawCard(deckcard.cardDrawn());
+            }
+        }                                                   //Sharing the card to all the player
+    }
+
+    public String getCategoryMode() {                   //To get the trump mode
         return categoryMode;
     }
 
-    public String getGameMode()
+    public String getGameMode()                             //To get the game mode to be displayed
     {
         String game = "";
         if(categoryMode.equals("H"))
@@ -43,45 +62,31 @@ public class TableGame {
 
     public void setCategoryMode(String categoryMode) {
         this.categoryMode = categoryMode;
-    }
+    }   //Setting the trump mode
 
-    TableGame(int numberOfPlayers, Deck deckcard)
+
+
+    public void addBackCard()                   //Method to put all the card back into the deck if there are no more card in the deck
     {
-        categoryMode = "";
-        usedCard = new ArrayList<Card>();
-        gameplayers = new ArrayList<Player>();
-        deckCard = deckcard;
-        lastPlayerTurn = "";
-        for(int x = 0; x < numberOfPlayers; x++)
+        ArrayList<Card> reStore = new ArrayList<Card>();
+        for(Card cards: usedCard)
         {
-            String nameOfPlayer = JOptionPane.showInputDialog(null,"Enter player name", "Name",
-                    JOptionPane.INFORMATION_MESSAGE);
-            gameplayers.add(new Player(nameOfPlayer));
+            reStore.add(cards);
         }
-        for(int x = 0; x<8; x++) {
-            for (Player player : gameplayers) {
-                player.drawCard(deckcard.cardDrawn());
-            }
-        }
-    }
-
-    public void addBackCard()
-    {
-        Card cardLastPlayed = getLastCard();
-        usedCard.remove(cardLastPlayed);
-        deckCard = new Deck(usedCard);
+        setDeckCard(new Deck(reStore));
         usedCard.clear();
-        usedCard.add(cardLastPlayed);
+        usedCard.add(reStore.get(reStore.size()-1));
 
     }
     public ArrayList<Player> getGameplayers() {
         return gameplayers;
-    }
-    public Card getLastCard() {
+    }       //Method to get the araylist of player
+
+    public Card getLastCard() {         //Method to get the last card played
         return usedCard.get(usedCard.size()-1);
     }
 
-    public boolean anyCardPlayed()
+    public boolean anyCardPlayed()      //To check if it is the first card played or not
     {
         boolean played = false;
         if(usedCard.size()>0)
@@ -91,18 +96,14 @@ public class TableGame {
 
     public Deck getDeckCard() {
         return deckCard;
-    }
+    }   //To get the deck card
 
-    public Player getPlayer(int x)
-    {
-        return gameplayers.get(x);
-    }
 
-    public boolean playCard(Card card, Player play)
+    public boolean playCard(Card card, Player play)     //Method to play the card to see whether it is allowed or not
     {
         boolean isHigher = false;
         int comparison = 0;
-        if(usedCard.size()==0 || this.playerGetTurnAgain(play))
+        if(usedCard.size()==0 || this.playerGetTurnAgain(play))     //Decision if it is the start or the player get to play again
         {
             if(card  instanceof SupertrumpCard)
             {
@@ -111,8 +112,8 @@ public class TableGame {
             isHigher = true;
         }
         else {
-            if(card instanceof NormalCard) {
-                if (getLastCard() instanceof NormalCard) {
+            if(card instanceof NormalCard) {            //Check if the card played is normal card
+                if (getLastCard() instanceof NormalCard) {          //Check if the previous card is a normal card
                     if (categoryMode.equals("H")) {
                         Float current = new Float(((NormalCard) card).getHardness());
                         Float previous = new Float(((NormalCard) getLastCard()).getHardness());
@@ -133,22 +134,21 @@ public class TableGame {
                         Float current = new Float(((NormalCard) card).getEcoValueValue());
                         Float previous = new Float(((NormalCard) getLastCard()).getEcoValueValue());
                         comparison = current.compareTo(previous);
-                    }
+                    }               //Comparing the value according to the trump category
                     if (comparison > 0) {
                         isHigher = true;
-                    }
+                    }       //Allow to continue if the value is higher
                     else
                     {
                         JOptionPane.showMessageDialog(null,"Invalid selection, your choice don't have enough value to fight the last card");
-                    }
-                } else {
-                    isHigher = true;
+                    }   //Show error message
+                } else {        //If user played supertrump card previously
+                    isHigher = true;        //Just allow
                 }
-
             }
             else
-            {
-                setCategoryMode(((SupertrumpCard) card).useEffect());
+            {           //If user play supertrump card now
+                setCategoryMode(((SupertrumpCard) card).useEffect());       //Change the category accordingly
                 isHigher = true;
             }
         }
@@ -158,21 +158,17 @@ public class TableGame {
     public void putCard(Card card)
     {
         usedCard.add(card);
-    }
+    }           //Method to put card to the table
 
-    public ArrayList<Card> getUsedCard() {
-        return usedCard;
-    }
-
-    public String getLastPlayerTurn() {
+    public String getLastPlayerTurn() {                 //Method to get the last player name
         return lastPlayerTurn;
     }
 
-    public void setLastPlayerTurn(String lastPlayerTurn) {
+    public void setLastPlayerTurn(String lastPlayerTurn) {      //Method to set the last player who didn't pass
         this.lastPlayerTurn = lastPlayerTurn;
     }
 
-    public boolean playerGetTurnAgain(Player gamePlayer)
+    public boolean playerGetTurnAgain(Player gamePlayer)        //Method to check if all except him pass
     {
         boolean statement = false;
         if(getLastPlayerTurn().equals(gamePlayer.getName()))
@@ -182,4 +178,7 @@ public class TableGame {
         return statement;
     }
 
+    public void setDeckCard(Deck deckCard) {                    //Method to set the deckcard again
+        this.deckCard = deckCard;
+    }
 }

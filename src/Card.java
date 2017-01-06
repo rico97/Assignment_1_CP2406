@@ -10,11 +10,11 @@ public class Card {
     Card(String nm)
     {
         name = nm;
-    }
+    }       //Constructing the card
 
     public String getName() {
         return name;
-    }
+    }       //Getter method
 
 
 }

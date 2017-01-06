@@ -1,33 +1,27 @@
 import java.util.Random;
-import java.util.ArrayList;
+import java.util.ArrayList;     //Import the necessary file
 
 
 /**
  * Created by Rico on 1/4/2017.
  */
 public class Deck {
-    private ArrayList<Card> deckContent;
+    private ArrayList<Card> deckContent;            //Defining the variable
 
     Deck(ArrayList<Card> cardlist)
     {
         deckContent = cardlist;
-    }
+    }           //Constructing the class
 
-    public Card cardDrawn()
+    public Card cardDrawn()                     //Card drawn method to draw card from the deck
     {
-        int x = new Random().nextInt(deckContent.size());
+        int x = new Random().nextInt(deckContent.size());           //Getting a random number
         Card retrieve = deckContent.get(x);
-        deckContent.remove(x);
+        deckContent.remove(x);                                      //Get the card from the previous random number
         return retrieve;
-    }
-
-    public Card getCard(int x)
-    {
-        Card get = deckContent.get(x);
-        return get;
     }
 
     public ArrayList<Card> getDeckContent() {
         return deckContent;
-    }
+    }   //Getter for the array of cards in the deck
 }

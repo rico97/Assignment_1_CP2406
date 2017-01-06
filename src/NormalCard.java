@@ -1,7 +1,7 @@
 /**
  * Created by Rico on 1/4/2017.
  */
-public class NormalCard extends Card {
+public class NormalCard extends Card {              //Class extend from the Card Class
     private float hardness;
     private float specificGravity;
     private String cleavage;
@@ -9,7 +9,7 @@ public class NormalCard extends Card {
     private String crustalAbundance;
     private int crustalAbundanceValue;
     private String ecoValue;
-    private int ecoValueValue;
+    private int ecoValueValue;              //Defining all the variable
 
     NormalCard(String nm, float hard, float speGra, String cleav, String cryAbu, String ecoV)
     {
@@ -21,7 +21,7 @@ public class NormalCard extends Card {
         ecoValue = ecoV;
         cleavageValue = convertCleavageValue();
         crustalAbundanceValue = convertAbuValue();
-        ecoValueValue = convertEcoValue();
+        ecoValueValue = convertEcoValue();                  //Constructor for all the variable
     }
 
     public int getCleavageValue() {
@@ -54,9 +54,9 @@ public class NormalCard extends Card {
 
     public String getEcoValue() {
         return ecoValue;
-    }
+    }                           //All the get method for all the variable
 
-    public int convertCleavageValue()
+    public int convertCleavageValue()                                           //Converting all the Cleavage into int number to be compared
     {
         int cleaValue = 0;
         String x = getCleavage();
@@ -92,7 +92,7 @@ public class NormalCard extends Card {
         {cleaValue = 15;}
         return cleaValue;
     }
-    public int convertAbuValue()
+    public int convertAbuValue()                    //Converting all the Crustal Abundance into int to be compared
     {
         int aValue = 0;
         String x = getCrustalAbundance();
@@ -110,7 +110,7 @@ public class NormalCard extends Card {
         {aValue=6;}
         return aValue;
     }
-    public int convertEcoValue()
+    public int convertEcoValue()                //Converting the economic value into int to be compared
     {
         int eValue = 0;
         String x = getEcoValue();
