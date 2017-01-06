@@ -56,5 +56,6 @@ public class MineralSupertrumps {
             }
 
         }
+        JOptionPane.showMessageDialog(null,"The game is over, "+ gameTable.getGameplayers().get(0) + " lost");
     }
 }
